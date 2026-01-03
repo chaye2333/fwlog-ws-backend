@@ -1,0 +1,40 @@
+在  Linux 系统上测试完毕，napcat测试没问题，llob还没测（简单测试
+
+这里是茶叶，目前版本为 fwlog 聊天记录转海豹日志工具（Python版），提供了一键启动脚本，支持多 Bot 实例连接。
+Linux 版本会自动创建 screen 在后台运行。
+
+食用方法：
+1. 用 IDE（记事本/VSCode）打开 fwlog_ws_backend/fwlog_ws_bot.py。
+2. 找到代码开头的 BOT_CONFIGS 区域（约第 10 行），配置你的 NapCat/LLOneBot 实例信息：
+   - name: Bot 名称（用于日志显示）
+   - url: WS 连接地址（如 ws://127.0.0.1:3001）
+   - token: 访问令牌（如果有的话，没有留空）
+   （如果需要连接多个 Bot，可以复制字典块添加更多配置）
+
+【Linux 后端启动】：
+3. cd 到脚本所在目录，在终端中输入：
+   chmod +x start_fwlog_linux.sh   # 第一次需要，赋予执行权限
+   ./start_fwlog_linux.sh
+
+   即可运行后端。
+   如果要关闭后端，可以在终端输入 screen -ls 查看目前运行的后台，
+   再输入 screen -X -S fwlog_bot quit 将这个后台整个关闭。
+   如果再启动则只需要再 cd 到对应目录，输入 ./start_fwlog_linux.sh。
+
+【Windows 后端启动】：
+3. 在文件夹中双击 start_fwlog_win.bat
+   运行脚本后会自动创建 .venv 虚拟环境并安装依赖，然后启动后端。
+   如果要关闭后端，只需要把黑窗关闭即可。
+
+【功能说明】：
+本工具用于将 NapCat/LLOneBot 的【合并转发】消息转换为海豹日志格式。
+指令列表（在群内发送）：
+.fwlog new [名称]   // 新建并开始记录
+.fwlog on [名称]    // 继续记录已有日志
+.fwlog off          // 暂停当前日志记录
+.fwlog end [名称]   // 结束并发送日志文件（直接发送 TXT 文件）
+.fwlog get [名称]   // 获取指定日志文件
+.fwlog list         // 列出当前会话日志
+.fwlog clear [名称] // 清除指定日志
+
+注意：本工具仅解析【合并转发】内容，不记录实时消息。
